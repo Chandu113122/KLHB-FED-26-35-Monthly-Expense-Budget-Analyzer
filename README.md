@@ -41,3 +41,13 @@ Dr. K. Sreeram Murthy.
 - `data/` - Input/sample data
 - `results/` - Generated results
 - `reports/` - Project reports
+
+## Future Improvements
+
+- Add expense categories
+- Store expense data in a file
+- Generate monthly expense reports
+
+
+
+
