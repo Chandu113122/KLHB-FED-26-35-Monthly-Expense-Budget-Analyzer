@@ -1,0 +1,15 @@
+=================================
+ MONTHLY EXPENSE & BUDGET ANALYZER
+=================================
+Enter your monthly income: 30000
+Enter your monthly budget: 15000
+Enter your total monthly expenses: 10000
+
+--------- SUMMARY ---------
+Monthly Income  : Rs.30000.0
+Monthly Budget  : Rs.15000.0
+Total Expenses  : Rs.10000.0
+Remaining Budget: Rs.5000.0
+Savings         : Rs.20000.0
+Budget Used     : 66.66666666666666%
+Status: Within Budget.
