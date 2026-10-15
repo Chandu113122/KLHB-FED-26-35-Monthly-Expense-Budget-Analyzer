@@ -43,4 +43,12 @@ Dr. K. Sreeram Murthy.
 - `reports/` - Project reports
 
 ## Expected Output
+
 The program is expected to accept expense details from the user, calculate the total expenses, and display whether the spending is within the budget or exceeds it.
+
+## Future Improvements
+
+- Add expense categories
+- Store expense data in a file
+- Generate monthly expense reports
+
