@@ -1,0 +1,27 @@
+# Project Design
+
+## Introduction
+The Monthly Expense and Budget Analyzer is a Java project that helps users track expenses and manage a monthly budget.
+
+## Objectives
+- Record expenses by category.
+- Calculate total expenses.
+- Compare expenses with the monthly budget.
+- Display remaining budget.
+
+## Project Workflow
+1. Enter the monthly budget.
+2. Enter expense categories and amounts.
+3. Calculate total expenses.
+4. Compare expenses with the budget.
+5. Display the final summary.
+
+## Technologies Used
+- Java
+- Git and GitHub
+- Visual Studio Code
+
+## Future Improvements
+- Save expense records in a file.
+- Add more expense categories.
+- Generate monthly reports.
