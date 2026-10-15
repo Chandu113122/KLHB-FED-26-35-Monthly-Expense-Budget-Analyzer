@@ -18,11 +18,19 @@ public class Main {
         System.out.print("Enter your total monthly expenses: ");
         double expenses = sc.nextDouble();
 
+        if (income < 0 || budget <= 0 || expenses < 0) {
+            System.out.println("Invalid input!");
+            System.out.println("Income and expenses cannot be negative.");
+            System.out.println("Budget must be greater than zero.");
+            sc.close();
+            return;
+        }
+
         double balance = budget - expenses;
         double savings = income - expenses;
-double percentage = (expenses / budget) * 100;
+        double percentage = (expenses / budget) * 100;
 
-        System.out.println("\n--------- SUMMARY ---------");
+        System.out.println("--------- SUMMARY ---------");
         System.out.println("Monthly Income  : Rs." + income);
         System.out.println("Monthly Budget  : Rs." + budget);
         System.out.println("Total Expenses  : Rs." + expenses);
