@@ -41,3 +41,6 @@ Dr. K. Sreeram Murthy.
 - `data/` - Input/sample data
 - `results/` - Generated results
 - `reports/` - Project reports
+
+## Expected Output
+The program is expected to accept expense details from the user, calculate the total expenses, and display whether the spending is within the budget or exceeds it.
