@@ -46,9 +46,13 @@ Dr. K. Sreeram Murthy.
 
 The program is expected to accept expense details from the user, calculate the total expenses, and display whether the spending is within the budget or exceeds it.
 
-## Future Improvements
+## Future Enhancements
 
-- Add expense categories
-- Store expense data in a file
-- Generate monthly expense reports
+- **Expense Categorization:** Classify expenses into categories such as food, travel, shopping, education, and bills.
+- **Data Storage:** Store expense records in files or a database for future reference.
+- **Monthly Reports:** Generate monthly expense summaries and graphical reports to analyze spending habits.
+- **Budget Alerts:** Notify users when their expenses approach or exceed the set monthly budget.
+- **Savings Goal Tracking:** Help users set savings targets and monitor their progress.
+- **Graphical User Interface:** Develop a user-friendly interface using Java Swing or JavaFX.
+- **Expense History and Analysis:** Compare monthly expenses and identify spending patterns to improve financial management.
 
