@@ -213,5 +213,114 @@ public class Main {
             System.out.println("No expenses available.");
             return;
         }
+        
+    Map<String, Double> totals = expenses.stream (http://expenses.stream/)()
+            .collect(Collectors.groupingBy(
+                Expense::getCategory,
+                TreeMap::new,
+                Collectors.summingDouble(Expense::getAmount)
+            ));
+
+        System.out.println("\n------ CATEGORY SUMMARY ------");
+
+        totals.forEach((category, amount) ->
+            System.out.printf("%s: Rs.%.2f%n", category, amount));
+    }
+
+    // CO5: File handling
+    static void saveReport() {
+        double total = calculateTotal();
+
+        try (PrintWriter writer =
+                 new PrintWriter(new FileWriter("expense_report.txt"))) {
+
+            writer.println("MONTHLY EXPENSE REPORT");
+            writer.println("----------------------");
+            writer.println("Income: " + income);
+            writer.println("Budget: " + budget);
+            writer.println("Expenses: " + total);
+            writer.println("Savings: " + (income - total));
+            writer.println("Remaining budget: " + (budget - total));
+
+            writer.println("\nEXPENSE DETAILS");
+
+            for (Expense e : expenses) {
+                writer.println(e);
+            }
+
+            writer.println("\nCATEGORY SUMMARY");
+
+            Map<String, Double> totals = expenses.stream (http://expenses.stream/)()
+                .collect(Collectors.groupingBy(
+                    Expense::getCategory,
+                    TreeMap::new,
+                    Collectors.summingDouble(Expense::getAmount)
+                ));
+
+            totals.forEach((category, amount) ->
+                writer.println(category + ": Rs." + amount));
+
+            System.out.println("Report saved successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Error saving report.");
+        }
+    }
+
+    // CO2: Update values using input validation
+    static void updateDetails() {
+        System.out.println("Update financial details");
+
+        income = readNonNegative("New monthly income: ");
+        budget = readNonNegative("New monthly budget: ");
+
+        System.out.println("Details updated successfully.");
+    }
+
+    // CO1 and CO2: Input validation
+    static double readNonNegative(String message) {
+        while (true) {
+            System.out.print(message);
+
+            if (sc.hasNextDouble()) {
+                double value = sc.nextDouble();
+
+                if (Double.isFinite(value) && value >= 0) {
+                    return value;
+                }
+
+                System.out.println("Enter a non-negative number.");
+            } else {
+                System.out.println("Invalid number.");
+                sc.next (http://sc.next/)();
+            }
+        }
+    }
+
+    static double readPositive(String message) {
+        while (true) {
+            double value = readNonNegative(message);
+
+            if (value > 0) {
+                return value;
+            }
+
+            System.out.println("Amount must be greater than zero.");
+        }
+    }
+
+    static int readInt(String message) {
+        while (true) {
+            System.out.print(message);
+
+            if (sc.hasNextInt()) {
+                return sc.nextInt();
+            }
+
+            System.out.println("Enter a valid whole number.");
+            sc.next ();
+        }
+    }
+}
 
       
