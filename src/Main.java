@@ -1,75 +1,217 @@
+
 import java.util.*;
 import java.io.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
-class Expense { // CO4: Class and encapsulation
-private String category;
-private double amount;
+// CO4: Class and encapsulation
+class Expense {
+    private String category;
+    private double amount;
+    private String date;
+    private String note;
 
-Expense(String category, double amount) {
-this.category = category;
-this.amount = amount;
-}
+    public Expense(String category, double amount, String date, String note) {
+        this.category = category;
+        this.amount = amount;
+        this.date = date;
+        this.note = note;
+    }
 
-public String getCategory() { return category; }
-public double getAmount() { return amount; }
+    public String getCategory() {
+        return category;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public String toString() {
+        return date + " | " + category + " | Rs." + amount + " | " + note;
+    }
 }
 
 public class Main {
-static double total(ArrayList<Expense> list) { // CO3: Method
-double sum = 0;
-for (Expense e : list)
-sum += e.getAmount();
-return sum;
-}
+    static Scanner sc = new Scanner(System.in);
+    static ArrayList<Expense> expenses = new ArrayList<>();
 
-public static void main(String[] args) {
-Scanner sc = new Scanner(System.in); // CO1: Input
-ArrayList<Expense> expenses = new ArrayList<>(); // CO6
-  System.out.print("Monthly income: ");
-double income = sc.nextDouble();
-System.out.print("Monthly budget: ");
-double budget = sc.nextDouble();
+    static double income = 0;
+    static double budget = 0;
 
-// CO2: Loop and conditional statements
-System.out.print("Number of expenses: ");
-int n = sc.nextInt();
-sc.nextLine();
+    // Main program
+    public static void main(String[] args) {
+        System.out.println("==============================");
+        System.out.println(" MONTHLY EXPENSE ANALYZER");
+        System.out.println("==============================");
 
-for (int i = 0; i < n; i++) {
-System.out.print("Category and amount: ");
-String category = sc.next (http://sc.next/)();
-double amount = sc.nextDouble();
+        readFinancialDetails();
 
-if (amount > 0)
-expenses.add(new Expense(category, amount));
-else
-System.out.println("Invalid amount");
-}
+        int choice;
 
-double spent = total(expenses);
-double savings = income - spent;
+        // CO2: Loop and switch
+        do {
+            showMenu();
+            choice = readInt("Enter choice: ");
 
-// CO6: Stream analysis
-expenses.stream (http://expenses.stream/)()
-.collect(Collectors.groupingBy(
-Expense::getCategory,
-Collectors.summingDouble(Expense::getAmount)))
-.forEach((c, a) -> System.out.println(c + ": " + a));
+            switch (choice) {
+                case 1:
+                    addExpense();
+                    break;
 
-System.out.println("Total: " + spent);
-System.out.println("Savings: " + savings);
-System.out.println(spent > budget
-? "Budget Exceeded" : "Within Budget");
+                case 2:
+                    showExpenses();
+                    break;
 
-// CO5: File handling
-try (PrintWriter out = new PrintWriter("report.txt")) {
-out.println("Income: " + income);
-out.println("Expenses: " + spent);
-out.println("Savings: " + savings);
-} catch (IOException e) {
-System.out.println("File error");
-}
-sc.close();
-}
-}
+                case 3:
+                    showSummary();
+                    break;
+
+                case 4:
+                    categorySummary();
+                    break;
+
+                case 5:
+                    saveReport();
+                    break;
+
+                case 6:
+                    updateDetails();
+                    break;
+
+                case 0:
+                    System.out.println("Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
+            }
+
+        } while (choice != 0);
+
+        sc.close();
+    }
+
+    // CO1: Variables and input
+    static void readFinancialDetails() {
+        income = readNonNegative("Monthly income: ");
+        budget = readNonNegative("Monthly budget: ");
+    }
+
+    static void showMenu() {
+        System.out.println("\n-------- MENU --------");
+        System.out.println("1. Add expense");
+        System.out.println("2. View expenses");
+        System.out.println("3. Monthly summary");
+        System.out.println("4. Category summary");
+        System.out.println("5. Save report");
+        System.out.println("6. Update income/budget");
+        System.out.println("0. Exit");
+    }
+
+    // CO3: Reusable method
+    static void addExpense() {
+        sc.nextLine();
+
+        System.out.print("Enter category: ");
+        String category = sc.nextLine().trim();
+
+        if (category.isEmpty()) {
+            System.out.println("Category cannot be empty.");
+            return;
+        }
+
+        double amount = readPositive("Enter amount: ");
+        sc.nextLine();
+
+        System.out.print("Enter date: ");
+        String date = sc.nextLine().trim();
+
+        if (date.isEmpty()) {
+            date = "Not specified";
+        }
+
+        System.out.print("Enter note: ");
+        String note = sc.nextLine().trim();
+
+        if (note.isEmpty()) {
+            note = "No note";
+        }
+
+        Expense e = new Expense(category, amount, date, note);
+        expenses.add(e); // CO6: ArrayList
+
+        System.out.println("Expense added successfully.");
+    }
+
+    // CO2: Conditions and loops
+    static void showExpenses() {
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses found.");
+            return;
+        }
+
+        System.out.println("\n------ EXPENSE LIST ------");
+
+        for (int i = 0; i < expenses.size(); i++) {
+            System.out.println((i + 1) + ". " + expenses.get(i));
+        }
+    }
+
+    // CO3: Method and calculations
+    static double calculateTotal() {
+        double total = 0;
+
+        for (Expense e : expenses) {
+            total += e.getAmount();
+        }
+
+        return total;
+    }
+
+    static void showSummary() {
+        double total = calculateTotal();
+        double savings = income - total;
+        double remaining = budget - total;
+        double percentage = 0;
+
+        if (budget > 0) {
+            percentage = total / budget * 100;
+        }
+
+        System.out.println("\n------ MONTHLY SUMMARY ------");
+        System.out.printf("Income: Rs.%.2f%n", income);
+        System.out.printf("Budget: Rs.%.2f%n", budget);
+        System.out.printf("Expenses: Rs.%.2f%n", total);
+        System.out.printf("Savings: Rs.%.2f%n", savings);
+        System.out.printf("Remaining budget: Rs.%.2f%n", remaining);
+        System.out.printf("Budget used: %.2f%%%n", percentage);
+
+        // CO2: Decision making
+        if (total > budget) {
+            System.out.println("Status: Budget Exceeded");
+        } else if (total == budget) {
+            System.out.println("Status: Budget Fully Used");
+        } else {
+            System.out.println("Status: Within Budget");
+        }
+
+        if (savings < 0) {
+            System.out.println("Warning: Expenses exceed income!");
+        }
+    }
+
+    // CO6: Streams and category grouping
+    static void categorySummary() {
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses available.");
+            return;
+        }
+
+      
